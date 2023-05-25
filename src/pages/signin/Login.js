@@ -75,7 +75,7 @@ export default function index() {
                                     onChange={handleChange}
                                 />
                                 <LoginInput 
-                                    type="Password"
+                                    type="password"
                                     name="login_password"
                                     icon="password"
                                     placeholder="Password"

@@ -27,6 +27,12 @@ export default function index({ icon, placeholder, ...props }) {
                     {...field}
                     {...props}
                 />
+                {meta.touched && meta.error ? (
+                    <div className={styles.error_popup}>
+                        <span></span>
+                        <ErrorMessage name={field.name} className={styles.error} />
+                    </div>
+                ): null}
                 
             </LoginInputContainer>
     );
