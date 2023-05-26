@@ -44,7 +44,7 @@ const initialValues = {
 
 
 const metadata = {
-    title: "AliExpress - Online Shopping for Popular Electronics, Fashion, Home & Garden, Toys & Sports, Automobiles and More products - AliExpress",
+    title: "Online Shopping for Popular Electronics, Fashion, Home & Garden, Toys & Sports, Automobiles and More products for Affordable Prices.",
 };
 
 export default function index({ session, providers }) {
@@ -53,8 +53,6 @@ export default function index({ session, providers }) {
         nome: "Brasil",
         bandeira: "https://cdn.ipregistry.co/flags/wikimedia/br.svg",
     });
-    console.log(providers)
-
     
     const [ user, setUser ] = useState(initialValues);
     const { 
