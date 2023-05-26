@@ -1,9 +1,16 @@
 import nc from 'next-connect';
+import db from '@/utils/db';
 
-const handler = nc()
+const handler = nc();
 
-handler.get(async (req, res) => {
-  res.status(200).json({ name: 'signup' })
-}
-);
+handler.post(async (req, res) => {
+    try {
+        await db.connectDb();
+        console.log(req.body);
+        res.status(200).json({message: "ok"});
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+
+});
 export default handler;

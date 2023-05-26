@@ -30,8 +30,6 @@ export default function Home() {
     <>
       <Header country={country} />
         {session ? "Logado" : "Não logado"}
-            {console.log(session)
-        }
       <Footer country={country} />
     </>
   )
