@@ -13,7 +13,6 @@ export default function index({ icon, placeholder, ...props }) {
     return (
             <LoginInputContainer 
             className={`${meta.touched && meta.error ? styles.error : ""}`}>
-                {console.log(meta)}
                 {
                 icon == "user" ? <BiUser /> : 
                 icon == "email" ? <SiMinutemailer /> : 
