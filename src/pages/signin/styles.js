@@ -17,6 +17,8 @@ const theme = {
     blue: "#2f82ff",
     blueDark: "#2f82ff",
     blueLight: "#2f82ff",
+    errror_color: "#ed4337",
+    success_color: "#6cc070",
 };
 
 // Signin component ==================================
@@ -119,6 +121,7 @@ export const LoginSocials = styled.div`
     }
 
 `;
+
 export const LoginSocialWrap = styled.div`
     display: flex;
     margin-top: 1rem;
@@ -172,4 +175,16 @@ export const TopCol = styled.div`
     height: 50px;
     
 `;
+
+export const Succcess = styled.span`
+    color: ${theme.success_color};
+    font-size: 14px;
+    padding: 10px;
+    
+    `;
+export const Error = styled.span`
+    color: ${theme.errror_color};
+    font-size: 14px;
+    padding: 10px;
+    `;
 

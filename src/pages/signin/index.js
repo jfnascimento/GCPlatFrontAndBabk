@@ -1,9 +1,10 @@
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-
+import Router from 'next/router';
 import Link from 'next/link';
+
 import { 
     LoginContainer, 
     LoginHeader, 
@@ -22,24 +23,32 @@ import {
     LoginSocialWrap,
     LoginSocialImg,
     TopCol,
-} from './styles';
-import LoginInput from '@/components/imputs/loginInput';
 
+    Succcess,
+    Error,
+} from './styles';
+
+import LoginInput from '@/components/imputs/loginInput';
 import CicleIconBtn from '@/components/imputs/buttons/cicledIconBtn';
+
+import DotLoader from '@/components/loaders/dotloader';
 
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { getProviders, signIn } from 'next-auth/react';
-import { get } from 'mongoose';
+import { getCsrfToken, getProviders, getSession, signIn } from 'next-auth/react';
 
 const initialValues = {
     login_email: "",
     login_password: "",
-    full_name: "",
+    name: "",
     email: "",
     password: "",
     conf_password: "",
+    success: "",
+    error: "",
+    login_success: "",
+    login_error: "",
 };
 
 
@@ -47,8 +56,8 @@ const metadata = {
     title: "Online Shopping for Popular Electronics, Fashion, Home & Garden, Toys & Sports, Automobiles and More products for Affordable Prices.",
 };
 
-export default function index({ session, providers }) {
-
+export default function index({ providers, callbackUrl, csrfToken }) {
+    const [ loading, setLoading ] = useState(false);
     const [country, setCountry] = useState({
         nome: "Brasil",
         bandeira: "https://cdn.ipregistry.co/flags/wikimedia/br.svg",
@@ -58,10 +67,14 @@ export default function index({ session, providers }) {
     const { 
         login_email, 
         login_password,
-        full_name,
+        name,
         email,
         password,
         conf_password,
+        success,
+        error,
+        login_success,
+        login_error,
     } = user;
 
     const handleChange = (e) => {
@@ -77,7 +90,7 @@ export default function index({ session, providers }) {
     });
 
     const registerValidation = Yup.object().shape({
-        full_name: Yup.string("What's your name")
+        name: Yup.string("What's your name")
                         .required("Full name is required.")
                         .min(3, "Full name must be at least 3 characters long.")
                         .max(50, "Full name must be at most 50 characters long.")
@@ -89,8 +102,68 @@ export default function index({ session, providers }) {
         conf_password: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required("Confirm password is required."),
     });
 
+    const signUpHandler = async () => {
+        setLoading(true);
+        const data = {
+            name,
+            email,
+            password,
+            conf_password,
+        };
+        try {
+            const response = await axios.post("/api/auth/signup", data);
+            setUser({ ...user, login_success: response.data.message });
+            setLoading(false);
+            let option = {
+                redirect: false,
+                email: email,
+                password: password,
+            };
+            
+            setTimeout( async () => {
+                await signIn("credentials", option);
+                Router.push(callbackUrl || "/");
+            }, 200);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+            setUser({ ...user, success:"", error: error.response.data.message });
+            setTimeout(() => {
+                setUser({ ...user, success:"", error: "" });
+            }, 2000);
+        }
+        setLoading(false);
+    };
+    
+    const signInHandler = async () => {
+        setLoading(true);
+        let option = {
+            redirect: false,
+            email: login_email,
+            password: login_password,
+        };
+        const res = await signIn("credentials", option);
+        setUser({ ...user, login_success: "", login_error: "" });
+        setLoading(false);
+        if (res?.error) {
+            setLoading(false);
+            setUser({ ...user, login_success: "", login_error: res?.error });
+            setTimeout(() => {
+                setUser({ ...user, login_success: "", login_error: "" });
+            }, 2000);
+        } else{
+            setLoading(false);
+            setUser({ ...user, login_error: "", success: "Login successfull!" });
+            setTimeout(() => {
+                Router.push(callbackUrl || "/");
+            }, 500);
+        }
+    };
+
+
     return (
         <>
+        {loading && <DotLoader loading={loading} />}
         <Header country={country} />
         <LoginMain>
             <LoginContainer>
@@ -114,11 +187,19 @@ export default function index({ session, providers }) {
                             login_password,
                         }}
                         validationSchema={loginValidation}
+                        onSubmit={(() => {
+                            signInHandler();
+                        })}
                     
                     >
                     {
                         (form) => (
-                            <Form>                            
+                            <Form method='post' action="/api/auth/signin/email" >                            
+                                <input 
+                                    type="hidden" 
+                                    name="csrfToken" 
+                                    defaultValue={csrfToken} 
+                                />
                                 <LoginInput 
                                     type="email"
                                     name="login_email"
@@ -138,18 +219,22 @@ export default function index({ session, providers }) {
                                     text="Sign In"
                                     />
                                 <ForgotPassword>
-                                    <Link href="/forgot">Forgot Password?</Link>
+                                    <Link href="/auth/forgot">Forgot Password?</Link>
                                 </ForgotPassword>
                             </Form>
                         )
                     }  
                     </Formik>
-                    
+                    <span>
+                        {login_error && (<Error>{login_error}</Error>)}
+                        {login_success && (<Success>{login_success}</Success>)}
+                    </span>
                     <LoginSocials>
                         <LoginSocialOr>Or continue with</LoginSocialOr>
                         <LoginSocialWrap>
                         {
                             Object.values(providers).map((provider) => (
+                                provider.name !== "Credentials" && (
                                 <LoginSocialBtns key={provider.name}>
                                     <LoginSocialBtn
                                         onClick={() => signIn(provider.id)}
@@ -158,7 +243,7 @@ export default function index({ session, providers }) {
                                         <LoginSocialImg src={`../../icons/${provider.name}.png`} alt={provider.name} />
                                         Sign with {provider.name}
                                     </LoginSocialBtn>
-                                </LoginSocialBtns>
+                                </LoginSocialBtns>)
                             ))
                         }
                         </LoginSocialWrap>
@@ -178,20 +263,23 @@ export default function index({ session, providers }) {
                     <Formik
                         enableReinitialize
                         initialValues={{
-                            full_name,
+                            name,
                             email,
                             password,
                             conf_password,
                         }}
                         validationSchema={registerValidation}
+                        onSubmit={() => {
+                            signUpHandler()
+                        }}
                     
                     >
                     {
                         (form) => (
-                            <Form>
+                            <Form> 
                                 <LoginInput 
                                     type="text"
-                                    name="full_name"
+                                    name="name"
                                     icon="user"
                                     placeholder="Full Name"
                                     onChange={handleChange}
@@ -226,6 +314,8 @@ export default function index({ session, providers }) {
                         )
                     }  
                     </Formik>
+                    <div> { success && <Succcess>{success}</Succcess> } </div>
+                    <div> { error && <Error>{error}</Error> } </div>
                 </LoginForm>
             </LoginContainer>
         </LoginMain>
@@ -235,9 +325,20 @@ export default function index({ session, providers }) {
 }
 
 export async function getServerSideProps(context) {
+    const { req, query } = context;
+    const session = await getSession({ req });
+    if (session) {
+        return {
+            redirect: {
+                destination: callbackUrl || "/",
+            },
+        };
+    }
+    const csrfToken = await getCsrfToken(context);
+    const {callbackUrl} = query;
     const providers = Object.values( await getProviders());
-;
+
     return {
-        props: { providers },
+        props: { providers, csrfToken, callbackUrl },
     };
 }
