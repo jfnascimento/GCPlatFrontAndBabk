@@ -251,7 +251,7 @@ export const MainMain = styled.div`
 
 `;
 export const MainContainer = styled.div`
-    max-width: 95%;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 1rem;
     display: flex;

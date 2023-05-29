@@ -12,6 +12,8 @@ import { resetEmailTemplate } from '@/emails/resetEmailTemplate';
 
 const handler = nc();
 
+// TODO: Inserir comentarios explicando o codigo.
+
 handler.post(async (req, res) => {
     try {
         await db.connectDb();
@@ -21,7 +23,7 @@ handler.post(async (req, res) => {
             return res.status(400).json({message: "This email does not exist."});
         }
         const user_id = createResetToken({
-            id: user._id.toString(),
+            sub: user._id.toString(),
         });
         // Validate send email 
         const url = `${process.env.BASE_URL}/auth/reset/${user_id}`;

@@ -12,6 +12,8 @@ import { activateEmailTemplate } from '@/emails/acivateEmailTemplate';
 
 const handler = nc();
 
+// TODO: Inserir comentarios explicando o codigo.
+
 handler.post(async (req, res) => {
     try {
         await db.connectDb();

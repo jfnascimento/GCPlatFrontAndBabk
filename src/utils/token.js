@@ -7,5 +7,5 @@ export const createActivationToken = (payload) => {
 
 export const createResetToken = (payload) => {
     return jwt.sign(payload, 
-        process.env.RESET_TOKEN_SECRET, { expiresIn: "6h" });
+        process.env.RESET_TOKEN_SECRET, { expiresIn: "5m" });
 }

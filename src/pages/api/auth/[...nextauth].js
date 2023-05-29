@@ -20,7 +20,7 @@ db.connectDb();
 import bcrypt from 'bcrypt';
 import token from '@/utils/token';
 
-
+// TODO: Inserir comentarios explicando o codigo.
 
 export default NextAuth({
     adapter: MongoDBAdapter(clientPromise),

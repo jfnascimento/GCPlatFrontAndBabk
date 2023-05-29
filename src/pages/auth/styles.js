@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+// TODO: Inserir comentarios explicando o codigo.
+
+
 const theme = {
     primery: "#2f82ff",
     secondary: "#f8f8f8",

@@ -23,7 +23,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 
 
-
+// TODO: Inserir comentarios explicando o codigo.
 
 export default function index() {
     const [ email, setEmail] = useState('');
@@ -45,19 +45,20 @@ export default function index() {
     const forgotHandler = async () => {
         try{
             setLoading(true);
-            const { data } = await axios.post('/api/auth/forgot', { email });            
+            const { data } = await axios.post('/api/auth/forgot', { email });
+            console.log(data);            
             setError('');
             setSuccess(data.message);
-            setTimeout(() => {
-                setSuccess("");
-            }, 3000);
+            //setTimeout(() => {
+            //    setSuccess("");
+            //}, 3000);
                 setLoading(false);
             setEmail('');
         } catch (error) {
             setError(error.response.data.message);
-            setTimeout(() => {
-                setError("");
-            }, 3000);
+            //setTimeout(() => {
+            //    setError("");
+            //}, 3000);
             setLoading(false);
             setSuccess('');
         }

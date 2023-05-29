@@ -51,6 +51,7 @@ const initialValues = {
     login_error: "",
 };
 
+// TODO: Inserir comentarios explicando o codigo.
 
 const metadata = {
     title: "Online Shopping for Popular Electronics, Fashion, Home & Garden, Toys & Sports, Automobiles and More products for Affordable Prices.",

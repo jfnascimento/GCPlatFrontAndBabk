@@ -24,7 +24,9 @@ import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { signIn } from 'next-auth/react';
 
-// TODO: Inserir comentarios explicando o codigo.
+// TODO: Refatorar esse código para que ele fique mais limpo e legível
+// TODO 2: Refatorar para que usuário possa ativar a conta por email
+// TODO 3: Inserir comentários explicando o código
 
 export default function index({ user_id }) {
     const [ password, setPassword] = useState('');
@@ -49,7 +51,7 @@ export default function index({ user_id }) {
     const resetHandler = async () => {
         try{
             setLoading(true);
-            const { data } = await axios.put('/api/auth/activate', { 
+            const { data } = await axios.put('/api/auth/reset', { 
                 user_id,
                 password,
             });
@@ -153,6 +155,7 @@ export async function getServerSideProps(context) {
     console.log("token",token);
 
     const payload = jwt.verify(token, process.env.RESET_TOKEN_SECRET);
+    console.log(payload);
     try {
         //const user_id = payload.sub;
         return {

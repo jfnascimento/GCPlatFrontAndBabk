@@ -1,5 +1,8 @@
 // This approach is taken from https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
 "use client"
+
+// TODO: Inserir comentarios explicando o codigo.
+
 import { MongoClient } from "mongodb";
 
 if (!process.env.MONGODB_URI) {

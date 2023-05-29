@@ -16,10 +16,9 @@ handler.put(async (req, res) => {
         if(!user) {
             return res.status(400).json({message: "This user does not exist."});
         }
-        const hashedPassword = await bcrypt.hash(password, 12);
         await User.updateOne({
             _id: user_id,
-            password: hashedPassword
+            email_verified: true
         });
         
         res.status(200).json({email: user.email});
