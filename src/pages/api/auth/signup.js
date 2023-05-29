@@ -8,6 +8,7 @@ import db from '@/utils/db';
 
 import { validateEmail } from '@/utils/validation';
 import User from '@/models/User';
+import { activateEmailTemplate } from '@/emails/acivateEmailTemplate';
 
 const handler = nc();
 
@@ -38,8 +39,8 @@ handler.post(async (req, res) => {
         const activation_token = createActivationToken({
             id: addedUser._id.toString(),
         });
-        const url = `${process.env.BASE_URL}/api/auth/activate/${activation_token}`;
-        sendEmail(email, url, "Verify your account");
+        const url = `${process.env.BASE_URL}/auth/activate/${activation_token}`;
+        sendEmail(email, url, "Verify your account", name, activateEmailTemplate);
         res.status(200).send({message: "Register success! Please activate your email to start."});
     } catch (error) {
         res.status(500).json({message: error.message});

@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
 import {activateEmailTemplate}  from '../emails/acivateEmailTemplate';
+import {resetEmailTemplate}  from '../emails/resetEmailTemplate';
 
 const { OAuth2 } = google.auth;
 
@@ -20,7 +21,7 @@ const oauth2Client = new OAuth2(
     OAUTH_PLAYGROUND
 );
 
-export const sendEmail = (to, url, txt) => {
+export const sendEmail = (to, url, txt, name, template) => {
     oauth2Client.setCredentials({
         refresh_token: MAILING_SERVICE_CLIENT_REFRESH_TOKEN,
     });
@@ -42,8 +43,8 @@ export const sendEmail = (to, url, txt) => {
     const mailOptions = {
         from: SENDER_EMAIL_ADDRESS,
         to: to,
-        subject: 'Gc Store - Verify your email address',
-        html: activateEmailTemplate(url,to),
+        subject: `Gc Store - ${txt}`,
+        html: template(url,to, name),
     };
 
     smtpTransport.sendMail(mailOptions, (err, info) => {

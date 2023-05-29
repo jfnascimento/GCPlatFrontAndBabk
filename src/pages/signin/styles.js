@@ -176,7 +176,7 @@ export const TopCol = styled.div`
     
 `;
 
-export const Succcess = styled.span`
+export const Success = styled.span`
     color: ${theme.success_color};
     font-size: 14px;
     padding: 10px;

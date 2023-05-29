@@ -24,7 +24,7 @@ import {
     LoginSocialImg,
     TopCol,
 
-    Succcess,
+    Success,
     Error,
 } from './styles';
 
@@ -44,7 +44,7 @@ const initialValues = {
     name: "",
     email: "",
     password: "",
-    conf_password: "",
+    conf_password: "", 
     success: "",
     error: "",
     login_success: "",
@@ -112,7 +112,7 @@ export default function index({ providers, callbackUrl, csrfToken }) {
         };
         try {
             const response = await axios.post("/api/auth/signup", data);
-            setUser({ ...user, login_success: response.data.message });
+            setUser({ ...user, success: response.data.message });
             setLoading(false);
             let option = {
                 redirect: false,
@@ -153,7 +153,7 @@ export default function index({ providers, callbackUrl, csrfToken }) {
             }, 2000);
         } else{
             setLoading(false);
-            setUser({ ...user, login_error: "", success: "Login successfull!" });
+            setUser({ ...user, login_error: "", login_success: "Login successfull!" });
             setTimeout(() => {
                 Router.push(callbackUrl || "/");
             }, 500);
@@ -314,7 +314,7 @@ export default function index({ providers, callbackUrl, csrfToken }) {
                         )
                     }  
                     </Formik>
-                    <div> { success && <Succcess>{success}</Succcess> } </div>
+                    <div> { success && <Success>{success}</Success> } </div>
                     <div> { error && <Error>{error}</Error> } </div>
                 </LoginForm>
             </LoginContainer>
