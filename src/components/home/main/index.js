@@ -1,8 +1,8 @@
+import MainSwiper from './swiper';
 import {
     HomeMain,
     Menu,
     Header,
-    Swipers,
     Offer,
     User,
 } from './styled';
@@ -13,7 +13,7 @@ export default function index() {
         <HomeMain>
             <Menu>menu</Menu>
             <Header>home</Header>
-            <Swipers>swipers</Swipers>
+            <MainSwiper />
             <Offer>offer</Offer>
             <User>user</User>
         </HomeMain>

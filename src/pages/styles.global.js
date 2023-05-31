@@ -22,7 +22,7 @@ const theme = {
 };
 
 export const Container = styled.div`
-    max-width: 1700px;
+    max-width: 1500px;
     margin: 0 auto;
     min-height: 100vh;
 `;

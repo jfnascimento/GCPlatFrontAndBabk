@@ -19,12 +19,13 @@ const theme = {
     blueLight: "#2f82ff",
     errror_color: "#ed4337",
     success_color: "#6cc070",
-    shaddow_1: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+    shaddow_1: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;",
 };
 
 export const HomeMain = styled.div`
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
+    
     gap: 10px;
     grid-template-areas: 
     "menu header header"
@@ -36,31 +37,31 @@ export const HomeMain = styled.div`
 export const Menu = styled.div`
     grid-area: menu;
     height: 560px;
-    background: ${theme.warning};
     box-shadow: ${theme.shaddow_1};
 `;
 export const Header = styled.div`
     grid-area: header;
     height: 40px;
-    background: ${theme.primery};
     box-shadow: ${theme.shaddow_1};
 
 `;
-export const Swipers = styled.div`
+export const BannerSwp = styled.div`
     grid-area: swipers;
     height: 300px;
-    background: ${theme.danger};
+    max-width: 1100px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 0;
     box-shadow: ${theme.shaddow_1};
+    
 `;
 export const Offer = styled.div`
     grid-area: offers;
     height: 200px;
-    background: ${theme.success};
     box-shadow: ${theme.shaddow_1};
 `;
 export const User = styled.div`
     grid-area: user;
     height: 560px;
-    background: ${theme.info};
     box-shadow: ${theme.shaddow_1};
 `;
