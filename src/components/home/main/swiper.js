@@ -25,8 +25,12 @@ export default function MainSwiper() {
             pagination={{
             clickable: true,
             }}
+            autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+            }}
             navigation={true}
-            modules={[Pagination, Navigation]}
+            modules={[Autoplay, Pagination, Navigation]}
             className={stylesSw.swiper}
         >
           {
