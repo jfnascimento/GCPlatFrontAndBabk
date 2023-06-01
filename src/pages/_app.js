@@ -1,4 +1,9 @@
-import '@/styles/globals.scss'
+import '@/styles/globals.scss';
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 import styles from '@/styles/page.module.scss';
 import { Provider } from 'react-redux';
@@ -7,7 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { SessionProvider } from "next-auth/react"
 
-import Head from 'next/head'
+import Head from 'next/head';
 
 let persistor = persistStore(store);
 

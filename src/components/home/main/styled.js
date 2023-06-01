@@ -48,12 +48,14 @@ export const Header = styled.div`
 export const BannerSwp = styled.div`
     grid-area: swipers;
     height: 300px;
-    max-width: 1100px;
     background: #fff;
     border-radius: 10px;
     padding: 0;
     box-shadow: ${theme.shaddow_1};
-    
+    margin: 0 auto;
+    @media screen {
+        
+    }
 `;
 export const Offer = styled.div`
     grid-area: offers;

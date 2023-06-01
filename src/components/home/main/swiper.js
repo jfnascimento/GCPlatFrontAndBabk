@@ -1,14 +1,11 @@
 import {BannerSwp} from './styled';
 
 import { useRef, useState } from "react";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
 import stylesSw from "./page.module.scss";
 
 // import required modules
@@ -17,7 +14,7 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 
 export default function MainSwiper() {
   return (
-    <BannerSwp className={stylesSw.mainSwiper}>
+    <>
         <Swiper
             slidesPerView={1}
             spaceBetween={30}
@@ -43,6 +40,6 @@ export default function MainSwiper() {
             })
           }
         </Swiper>
-    </BannerSwp>
+    </>
   );
 }
