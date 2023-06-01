@@ -22,6 +22,7 @@ const theme = {
     shaddow_1: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;",
 };
 
+//=================== Main =====================
 export const HomeMain = styled.div`
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
@@ -34,34 +35,44 @@ export const HomeMain = styled.div`
     
     `;
 
+//=================== Menu =====================
 export const Menu = styled.div`
     grid-area: menu;
     height: 560px;
     box-shadow: ${theme.shaddow_1};
 `;
+
+//=================== Header ===================
 export const Header = styled.div`
     grid-area: header;
     height: 40px;
     box-shadow: ${theme.shaddow_1};
 
 `;
-export const BannerSwp = styled.div`
-    grid-area: swipers;
-    height: 300px;
-    background: #fff;
-    border-radius: 10px;
-    padding: 0;
-    box-shadow: ${theme.shaddow_1};
-    margin: 0 auto;
-    @media screen {
-        
-    }
-`;
+//=================== Offers ===================
+
 export const Offer = styled.div`
     grid-area: offers;
-    height: 200px;
+    overflow: hidden;
+    height: 220px;
+    background: #fff;
+    border-radius: 10px;
     box-shadow: ${theme.shaddow_1};
+    background-image: url('../../../images/flash.webp');
+    background-position: -275px -135px;
+    background-size: cover;
 `;
+
+export const OffersMain = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    grid-template-areas: 
+    "offer1 offer2 offer3";
+`;
+
+
+//=================== User =====================
 export const User = styled.div`
     grid-area: user;
     height: 560px;

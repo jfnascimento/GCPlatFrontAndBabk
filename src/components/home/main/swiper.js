@@ -1,4 +1,4 @@
-import {BannerSwp} from './styled';
+import {BannerSwp} from './styles';
 
 import { useRef, useState } from "react";
 

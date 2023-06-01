@@ -1,11 +1,12 @@
 import MainSwiper from './swiper';
+import Offers from './offers';
 import {
     HomeMain,
     Menu,
     Header,
     Offer,
     User,
-} from './styled';
+} from './styles';
 
 export default function index() {
   return (
@@ -14,7 +15,7 @@ export default function index() {
             <Menu>menu</Menu>
             <Header>home</Header>
             <MainSwiper />
-            <Offer>offer</Offer>
+            <Offers />
             <User>user</User>
         </HomeMain>
     </>
